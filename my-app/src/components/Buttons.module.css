@@ -1,0 +1,21 @@
+button{
+    font-size: 27px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    color: white;
+    border-radius: 5px;
+    
+}
+
+.start{
+    background-color: rgb(19, 187, 19);
+}
+.stop{
+    background-color: rgb(197, 6, 6);
+}
+.reset{
+    background-color: rgb(184, 184, 184);
+}
+.wait{
+    background-color: rgb(184, 184, 184);
+}
