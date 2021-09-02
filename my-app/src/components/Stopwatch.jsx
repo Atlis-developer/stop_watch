@@ -12,7 +12,6 @@ export const Stopwatch = () => {
 
   useEffect(() => {
     const timer$ = new Subject(); 
-
     interval(1000)
       .pipe(takeUntil(timer$))
       .subscribe(() => {
@@ -25,7 +24,6 @@ export const Stopwatch = () => {
       timer$.complete();
     };
   }, [starting]);
-
 
 
   const startWatch = useCallback(() => {
