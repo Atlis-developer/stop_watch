@@ -8,50 +8,71 @@ import s from "./Stopwatch.module.css"
 
 export const Stopwatch = () => {
   const [time, setTime] = useState(0);
-  const [starting, setStarting] = useState(false);
-
+  const [isActive, setIsActive] = useState(false);
+  const [isPaused, setIsPaused] = useState(true);
+  
   useEffect(() => {
     const timer$ = new Subject(); 
     interval(1000)
       .pipe(takeUntil(timer$))
       .subscribe(() => {
-        if (starting === true) {
+        if (isActive && !isPaused) {
           setTime(val => val + 1000);
+        } else {
+          clearInterval(interval);
         }
       });
     return () => {
       timer$.next();
       timer$.complete();
     };
-  }, [starting]);
+  }, [isActive, isPaused]);
 
 
-  const startWatch = useCallback(() => {
-    setStarting(true);
+  const clickStartWatch = useCallback(() => {
+    setIsActive(true);
+    setIsPaused(false);
   }, []);
 
-  const stopWatch = useCallback(() => {
-    setStarting(false);
+  const clickStopWatch = useCallback(() => {
+    setIsActive(false);
+    setIsPaused(false)
     setTime(0);
   }, []);
 
-  const resetWatch = useCallback(() => {
+  const clickResetWatch = useCallback(() => {
     setTime(0);
   }, []);
 
-  const waitWatch = useCallback(() => {
-    setStarting(false);
-  }, []);
+  
+  let timeout;
+  let prevent = false;
+
+  const clickWaitWatch = () => {
+    timeout = setTimeout(function() {
+      prevent = !prevent;
+    }, 300);
+  }
+
+  const doubleClickWaitWatch = () => {
+    clearTimeout(timeout);
+    if (!prevent) {
+      setIsActive(!isActive);
+      setIsPaused(!isPaused);
+    }
+  }
 
   return (
     <div className={s.display}>
       <Clock
         time={time} />
       <Buttons
-        startWatch={startWatch}
-        stopWatch={stopWatch}
-        resetWatch={resetWatch}
-        waitWatch={waitWatch} />
+        clickStartWatch={clickStartWatch}
+        clickStopWatch={clickStopWatch}
+        clickResetWatch={clickResetWatch}
+        clickWaitWatch={clickWaitWatch}
+        doubleClickWaitWatch={doubleClickWaitWatch}
+        isActive={isActive} />
     </div>
   );
 }

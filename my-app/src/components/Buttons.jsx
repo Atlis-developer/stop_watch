@@ -6,10 +6,10 @@ export const Buttons = (props) => {
   
   return (
     <div className={s.buttons}>
-      <button className={s.start} onClick={props.startWatch}>Start</button>
-      <button className={s.stop} onClick={props.stopWatch}>Stop</button>
-      <button className={s.reset} onClick={props.resetWatch}>Reset</button>
-      <button className={s.wait} onClick={props.waitWatch}>Wait</button>
+      {props.isActive ? <button className={s.stop} onClick={props.clickStopWatch}>Stop</button> :
+      <button className={s.start} onClick={props.clickStartWatch}>Start</button>}
+      <button className={s.reset} onClick={props.clickResetWatch}>Reset</button>
+      <button className={s.wait} onClick={props.clickWaitWatch} onDoubleClick={props.doubleClickWaitWatch}>Wait</button>
     </div>
   );
 }
