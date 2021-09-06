@@ -49,7 +49,7 @@ export const Stopwatch = () => {
   let prevent = false;
 
   const clickWaitWatch = () => {
-    timeout = setTimeout(function() {
+    timeout = setTimeout(() => {
       prevent = !prevent;
     }, 300);
   }
